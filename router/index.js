@@ -126,6 +126,12 @@ class Router {
       check("taskId").exists(),
       AnswerTaskController.getOneAnswerTask
     );
+    router.post(
+      "/update-answertask",
+      credential,
+      check("id").exists(),
+      AnswerTaskController.update
+    );
 
     /** End AnswerTask Controller */
 

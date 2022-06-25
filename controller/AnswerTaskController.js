@@ -158,6 +158,69 @@ class AnswerTaskController {
       });
     }
   }
+
+  async update(req, res) {
+    const errors = validationResult(req);
+    const context = await auth.getContext(req);
+
+    let message = "";
+
+    if (context.auth) {
+      try {
+        if (!errors.isEmpty()) {
+          message = "Required parameters missing";
+          options.responseMessage({
+            res,
+            statusCode: 400,
+            auth: false,
+            message,
+          });
+          throw new Error(message);
+        }
+
+        const params = req.body;
+
+        const foundAnswerTask = await answerTaskResolvers.findById(params);
+
+        if (!foundAnswerTask) {
+          message = `Cannot find answerTask id ${params.id}`;
+          options.responseMessage({
+            res,
+            statusCode: 400,
+            auth: context.auth,
+            message,
+          });
+          throw new Error(message);
+        }
+
+        const data = await answerTaskResolvers.update(params.id, params);
+
+        message = `answerTask updated successfully!`;
+        options.responseMessage({
+          res,
+          statusCode: 200,
+          auth: context.auth,
+          message,
+          data,
+        });
+      } catch (e) {
+        options.responseMessage({
+          res,
+          statusCode: 400,
+          auth: false,
+          message: e.message,
+        });
+      }
+    } else {
+      message = "Unauthorization!";
+      options.responseMessage({
+        res,
+        statusCode: 401,
+        auth: context.auth,
+        message,
+      });
+    }
+  }
 }
 
 module.exports = new AnswerTaskController();

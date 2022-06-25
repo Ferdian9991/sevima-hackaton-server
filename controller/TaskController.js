@@ -40,38 +40,51 @@ class TaskController {
     const context = await auth.getContext(req);
 
     let message = "";
+    try {
+      if (context.auth) {
+        if (!errors.isEmpty()) {
+          message = "Required parameters missing";
+          options.responseMessage({
+            res,
+            statusCode: 400,
+            auth: false,
+            message,
+          });
+          throw new Error(message);
+        }
 
-    if (context.auth) {
-      if (!errors.isEmpty()) {
-        message = "Required parameters missing";
-        options.responseMessage({ res, statusCode: 400, auth: false, message });
-        throw new Error(message);
+        message = "Successfully registered a new task!";
+        const params = req.body;
+        params["userId"] = context.user.id;
+        if (!params.classCode)
+          params.classCode = Math.random()
+            .toString(36)
+            .replace("0.", "" || "");
+
+        const data = await taskResolver.create(params);
+
+        options.responseMessage({
+          res,
+          statusCode: 200,
+          auth: context.auth,
+          message,
+          data,
+        });
+      } else {
+        message = "Unauthorization!";
+        options.responseMessage({
+          res,
+          statusCode: 401,
+          auth: context.auth,
+          message,
+        });
       }
-
-      message = "Successfully registered a new task!";
-      const params = req.body;
-      params["userId"] = context.user.id;
-      if (!params.classCode)
-        params.classCode = Math.random()
-          .toString(36)
-          .replace("0.", "" || "");
-
-      const data = await taskResolver.create(params);
-
+    } catch (e) {
       options.responseMessage({
         res,
-        statusCode: 200,
-        auth: context.auth,
-        message,
-        data,
-      });
-    } else {
-      message = "Unauthorization!";
-      options.responseMessage({
-        res,
-        statusCode: 401,
-        auth: context.auth,
-        message,
+        statusCode: 400,
+        auth: false,
+        message: e.message,
       });
     }
   }
