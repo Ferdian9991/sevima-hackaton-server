@@ -44,6 +44,7 @@ class Router {
       check("id").exists(),
       UserController.delete
     );
+    router.get("/get-teacher", credential, UserController.getTeacher);
 
     /**End UserController */
 

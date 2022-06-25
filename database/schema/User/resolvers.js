@@ -39,6 +39,20 @@ class UserResolver {
     }
   }
 
+  async findByRole(role) {
+    try {
+      const record = this.model
+        .find({ role })
+        .sort({ _createdAt: -1 })
+        .exec();
+
+      return await record;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
   async findByUsername(options) {
     try {
       const record = this.model.findOne({ username: options.username }).exec();
