@@ -77,6 +77,30 @@ class UserController {
     }
   }
 
+  async getParent(req, res) {
+    const context = await auth.getContext(req);
+    let message = "";
+    if (context.auth) {
+      const allTeacher = await userResolvers.findByRole("Parent");
+      message = "Successfully get parent!";
+      options.responseMessage({
+        res,
+        statusCode: 200,
+        auth: context.auth,
+        message,
+        data: allTeacher,
+      });
+    } else {
+      message = "Unauthorization!";
+      options.responseMessage({
+        res,
+        statusCode: 401,
+        auth: context.auth,
+        message,
+      });
+    }
+  }
+
   async getStudent(req, res) {
     const context = await auth.getContext(req);
     let message = "";

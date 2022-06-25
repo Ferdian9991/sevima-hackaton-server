@@ -49,6 +49,7 @@ class Router {
     );
     router.get("/get-teacher", credential, UserController.getTeacher);
     router.get("/get-student", credential, UserController.getStudent);
+    router.get("/get-parent", credential, UserController.getParent);
 
     /** End User Controller */
 
