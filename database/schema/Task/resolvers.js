@@ -30,7 +30,6 @@ class TaskResolver {
   }
 
   async getTasks(params) {
-    console.log(params.classroomId)
     try {
       const record = this.model
         .find({ classroomId: params.classroomId })
