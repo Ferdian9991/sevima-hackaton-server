@@ -23,6 +23,7 @@ const UserSchema = Builder.schema(
     phoneNumber: { type: String, default: "" },
     gender: { type: String, default: "" },
     picture: { type: String, default: "" },
+    role: { type: String, default: "" },
 
     status: { type: String, default: "active" },
   },
