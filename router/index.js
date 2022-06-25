@@ -105,28 +105,23 @@ class Router {
     /** End Task Controller */
 
     /**
-     * Task Controller
+     * AnswerTask Controller
      */
 
     router.post(
       "/add-answertask",
       credential,
-      check("name").exists(),
-      TaskController.create
-    );
-    router.post(
-      "/update-answertask",
-      credential,
-      check("id").exists(),
-      TaskController.update
+      check("content").exists(),
+      AnswerTaskController.create
     );
     router.post(
       "/get-answertask",
       credential,
+      check("taskId").exists(),
       AnswerTaskController.getAnswerTask
     );
 
-    /** End Task Controller */
+    /** End AnswerTask Controller */
 
     return router;
   }

@@ -29,10 +29,10 @@ class AnswerTaskResolver {
     }
   }
 
-  async findByClassCode(options) {
+  async findByTaskId(options) {
     try {
       const record = this.model
-        .findOne({ classCode: options.classCode.trim() })
+        .findOne({ userId: options.userId, taskId: options.taskId })
         .exec();
 
       return await record;
@@ -42,11 +42,39 @@ class AnswerTaskResolver {
     }
   }
 
-  async getAnswerTasks() {
+  async getAnswerTasks(options) {
     try {
-      const record = this.model.find({}).sort({ _createdAt: -1 }).exec();
+      const record = await this.model.aggregate([
+        {
+          $match: { taskId: options.taskId },
+        },
+        {
+          $lookup: {
+            from: "Users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        { $sort: { _createdAt: -1 } },
+        {
+          $project: {
+            _id: 1,
+            taskId: 1,
+            userId: 1,
+            content: 1,
+            score: 1,
+            _createdAt: 1,
+            _updatedAt: 1,
+            "user.username": 1,
+            "user.fullname": 1,
+            "user.classroomId": 1,
+            "user.picture": 1,
+          },
+        },
+      ]);
 
-      return await record;
+      return record;
     } catch (err) {
       console.log(err);
       return err;
