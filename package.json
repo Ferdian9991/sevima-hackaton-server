@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "author": "ferdian <ferdisatria15@gmail.com>",
+  "scripts": {
+    "server": "cross-env NODE_ENV=production node app.js",
+    "server:dev": "nodemon index.js --watch ./"
+  },
   "dependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",
     "@nodelib/fs.scandir": "^2.1.5",
@@ -43,5 +47,7 @@
     "winston": "^2.3.1",
     "yesno": "^0.3.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
 }
