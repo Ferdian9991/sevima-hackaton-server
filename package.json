@@ -6,7 +6,9 @@
   "author": "ferdian <ferdisatria15@gmail.com>",
   "scripts": {
     "server": "cross-env NODE_ENV=production node app.js",
-    "server:dev": "nodemon index.js --watch ./"
+    "server:dev": "nodemon index.js --watch ./",
+    "backup:db": "node database/utilities/backupdb.js",
+    "restore:db": "node database/utilities/restoredb.js"
   },
   "dependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",
