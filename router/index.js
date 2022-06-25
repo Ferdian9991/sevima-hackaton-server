@@ -33,18 +33,19 @@ class Router {
       UserController.login
     );
     router.post(
-      "/update",
+      "/update-user",
       credential,
       check("id").exists(),
       UserController.update
     );
     router.post(
-      "/delete",
+      "/delete-user",
       credential,
       check("id").exists(),
       UserController.delete
     );
     router.get("/get-teacher", credential, UserController.getTeacher);
+    router.get("/get-student", credential, UserController.getStudent);
 
     /**End UserController */
 
