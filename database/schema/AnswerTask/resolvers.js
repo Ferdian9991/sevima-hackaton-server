@@ -31,9 +31,8 @@ class AnswerTaskResolver {
 
   async findByTaskId(options) {
     try {
-      const record = this.model
-        .findOne({ userId: options.userId, taskId: options.taskId })
-        .exec();
+      const { taskId, userId } = options;
+      const record = this.model.findOne({ taskId, userId }).exec();
 
       return await record;
     } catch (err) {

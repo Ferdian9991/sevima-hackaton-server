@@ -50,6 +50,53 @@ class AnswerTaskController {
     }
   }
 
+  async getOneAnswerTask(req, res) {
+    const errors = validationResult(req);
+    const context = await auth.getContext(req);
+    let message = "";
+    try {
+      if (context.auth) {
+        if (!errors.isEmpty()) {
+          message = "Required parameters missing";
+          options.responseMessage({
+            res,
+            statusCode: 400,
+            auth: false,
+            message,
+          });
+          throw new Error(message);
+        }
+
+        const params = req.body;
+        params["userId"] = context.user.id;
+        const answerTask = await answerTaskResolvers.findByTaskId(params);
+        message = "Successfully get answerTask!";
+        options.responseMessage({
+          res,
+          statusCode: 200,
+          auth: context.auth,
+          message,
+          data: answerTask,
+        });
+      } else {
+        message = "Unauthorization!";
+        options.responseMessage({
+          res,
+          statusCode: 401,
+          auth: context.auth,
+          message,
+        });
+      }
+    } catch (e) {
+      options.responseMessage({
+        res,
+        statusCode: 400,
+        auth: false,
+        message: e.message,
+      });
+    }
+  }
+
   async create(req, res) {
     const errors = validationResult(req);
     const context = await auth.getContext(req);
