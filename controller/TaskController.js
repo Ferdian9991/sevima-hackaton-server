@@ -5,10 +5,17 @@ const auth = require("./actions/auth");
 
 class TaskController {
   async getTask(req, res) {
+    const errors = validationResult(req);
     const context = await auth.getContext(req);
     let message = "";
     if (context.auth) {
-      const allTasks = await taskResolver.getTasks();
+      if (!errors.isEmpty()) {
+        message = "Required parameters missing";
+        options.responseMessage({ res, statusCode: 400, auth: false, message });
+        throw new Error(message);
+      }
+      const params = req.body;
+      const allTasks = await taskResolver.getTasks(params);
       message = "Successfully get task!";
       options.responseMessage({
         res,

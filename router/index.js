@@ -99,7 +99,11 @@ class Router {
       check("id").exists(),
       TaskController.delete
     );
-    router.get("/get-task", credential, TaskController.getTask);
+    router.post(
+      "/get-task",
+      credential,
+      TaskController.getTask
+    );
 
     /** End Task Controller */
 

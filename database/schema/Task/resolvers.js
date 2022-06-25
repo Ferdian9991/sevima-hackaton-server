@@ -29,9 +29,13 @@ class TaskResolver {
     }
   }
 
-  async getTasks() {
+  async getTasks(params) {
+    console.log(params.classroomId)
     try {
-      const record = this.model.find({}).sort({ _createdAt: -1 }).exec();
+      const record = this.model
+        .find({ classroomId: params.classroomId })
+        .sort({ _createdAt: -1 })
+        .exec();
 
       return await record;
     } catch (err) {
