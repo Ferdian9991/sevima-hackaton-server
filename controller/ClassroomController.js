@@ -44,6 +44,10 @@ class ClassroomController {
       message = "Successfully registered a new Classroom!";
       const params = req.body;
       params["userId"] = context.user.id;
+      if (!params.classCode)
+        params.classCode = Math.random()
+          .toString(36)
+          .replace("0.", "" || "");
 
       const data = await classroomResolvers.create(params);
 

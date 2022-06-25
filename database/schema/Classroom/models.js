@@ -4,6 +4,7 @@ const ClassroomSchema = Builder.schema(
   {
     name: { type: String, default: "" },
     status: { type: String, default: "Online" },
+    classCode: { type: String, default: "" },
 
     _createdAt: { type: String, default: "" },
     _updatedAt: { type: String, default: "" },
