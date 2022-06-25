@@ -6,6 +6,7 @@ const credential = require("../controller/actions/auth").credential();
 
 const MainController = require("../controller/MainController");
 const UserController = require("../controller/UserController");
+const ClassroomController = require("../controller/ClassroomController");
 
 class Router {
   index() {
@@ -47,7 +48,33 @@ class Router {
     router.get("/get-teacher", credential, UserController.getTeacher);
     router.get("/get-student", credential, UserController.getStudent);
 
-    /**End UserController */
+    /** End User Controller */
+
+    /**
+     * Classroom Controller
+     */
+
+    router.post(
+      "/register-classroom",
+      credential,
+      check("name").exists(),
+      ClassroomController.create
+    );
+    router.post(
+      "/update-classroom",
+      credential,
+      check("id").exists(),
+      ClassroomController.update
+    );
+    router.post(
+      "/delete-classroom",
+      credential,
+      check("id").exists(),
+      ClassroomController.delete
+    );
+    router.get("/get-classroom", credential, ClassroomController.getClassroom);
+
+    /** End Classroom Controller */
 
     return router;
   }
