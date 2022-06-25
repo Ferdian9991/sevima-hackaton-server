@@ -8,6 +8,7 @@ const MainController = require("../controller/MainController");
 const UserController = require("../controller/UserController");
 const ClassroomController = require("../controller/ClassroomController");
 const TaskController = require("../controller/TaskController");
+const AnswerTaskController = require("../controller/AnswerTaskController");
 
 class Router {
   index() {
@@ -99,10 +100,30 @@ class Router {
       check("id").exists(),
       TaskController.delete
     );
+    router.post("/get-task", credential, TaskController.getTask);
+
+    /** End Task Controller */
+
+    /**
+     * Task Controller
+     */
+
     router.post(
-      "/get-task",
+      "/add-answertask",
       credential,
-      TaskController.getTask
+      check("name").exists(),
+      TaskController.create
+    );
+    router.post(
+      "/update-answertask",
+      credential,
+      check("id").exists(),
+      TaskController.update
+    );
+    router.post(
+      "/get-answertask",
+      credential,
+      AnswerTaskController.getAnswerTask
     );
 
     /** End Task Controller */
