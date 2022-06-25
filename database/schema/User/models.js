@@ -19,6 +19,7 @@ const UserSchema = Builder.schema(
 
     address: { type: String, default: "" },
     username: { type: String, unique: true },
+    classroomId: { type: String, default: "" },
     fullname: { type: String, default: "" },
     phoneNumber: { type: String, default: "" },
     gender: { type: String, default: "" },

@@ -29,6 +29,19 @@ class ClassroomResolver {
     }
   }
 
+  async findByClassCode(options) {
+    try {
+      const record = this.model
+        .findOne({ classCode: options.classCode.trim() })
+        .exec();
+
+      return await record;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
   async getClassrooms() {
     try {
       const record = this.model.find({}).sort({ _createdAt: -1 }).exec();

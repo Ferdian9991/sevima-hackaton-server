@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const options = require("../config/options");
 const userResolvers = require("../database/schema/User/resolvers");
+const classroomResolvers = require("../database/schema/Classroom/resolvers");
 const auth = require("./actions/auth");
 
 class UserController {
@@ -18,13 +19,22 @@ class UserController {
       message = "Successfully registered a new user!";
       const params = req.body;
       const foundUser = await userResolvers.findByUsername(params);
+      const foundClassroom = await classroomResolvers.findByClassCode(params);
 
       if (foundUser) {
         message = `Username is already exists!`;
         throw new Error(message);
       }
 
-      const data = await userResolvers.register(params);
+      if (!foundClassroom && params.role == "Student") {
+        message = `Class Code not found!`;
+        throw new Error(message);
+      }
+
+      const data = await userResolvers.register({
+        ...params,
+        classroomId: foundClassroom ? foundClassroom.id : "",
+      });
 
       options.responseMessage({
         res,
