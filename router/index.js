@@ -7,6 +7,7 @@ const credential = require("../controller/actions/auth").credential();
 const MainController = require("../controller/MainController");
 const UserController = require("../controller/UserController");
 const ClassroomController = require("../controller/ClassroomController");
+const TaskController = require("../controller/TaskController");
 
 class Router {
   index() {
@@ -75,6 +76,32 @@ class Router {
     router.get("/get-classroom", credential, ClassroomController.getClassroom);
 
     /** End Classroom Controller */
+
+    /**
+     * Task Controller
+     */
+
+    router.post(
+      "/add-task",
+      credential,
+      check("name").exists(),
+      TaskController.create
+    );
+    router.post(
+      "/update-task",
+      credential,
+      check("id").exists(),
+      TaskController.update
+    );
+    router.post(
+      "/delete-task",
+      credential,
+      check("id").exists(),
+      TaskController.delete
+    );
+    router.get("/get-task", credential, TaskController.getTask);
+
+    /** End Task Controller */
 
     return router;
   }
