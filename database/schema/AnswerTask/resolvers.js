@@ -65,6 +65,7 @@ class AnswerTaskResolver {
             score: 1,
             _createdAt: 1,
             _updatedAt: 1,
+            "user._id": 1,
             "user.username": 1,
             "user.fullname": 1,
             "user.classroomId": 1,
