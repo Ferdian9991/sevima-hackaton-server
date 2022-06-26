@@ -41,3 +41,9 @@ MONGODB_NAME=hackaton_app
 MONGOD_USERNAME=admin
 MONGOD_PASSWORD=123123
 ```
+5. Default Login
+
+```shell
+username : admin
+password : admin
+```
