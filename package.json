@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "ferdian <ferdisatria15@gmail.com>",
   "scripts": {
-    "server": "cross-env NODE_ENV=production node app.js",
+    "server": "cross-env NODE_ENV=production node index.js",
     "server:dev": "nodemon index.js --watch ./",
     "backup:db": "node database/utilities/backupdb.js",
     "restore:db": "node database/utilities/restoredb.js"
